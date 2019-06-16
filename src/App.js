@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Welcome from "./welcome";
+import Feedback from "./feedback";
+
+import { Provider as PeerContext } from "./context";
+import Resumen from "./resumen";
 
 function App() {
+  const [user, setUser] = React.useState("");
+  const [feedback, setFeedback] = React.useState([]);
+
+  if (!user)
+    return (
+      <>
+        <h1>Who are you?</h1>
+        <Welcome setUser={setUser} />
+      </>
+    );
+
+  if (feedback.length < 3)
+    return (
+      <>
+        <h1>Give your feedback</h1>
+        <Feedback setFeedback={setFeedback} feedback={feedback} />
+      </>
+    );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PeerContext value={user}>
+      <Resumen feedback={feedback} />
+    </PeerContext>
   );
 }
 
